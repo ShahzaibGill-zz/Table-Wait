@@ -6,58 +6,47 @@ angular.module('myApp.controllers', [])
     .controller('LandingPageController', [function(){
     }])
 
-    .controller('WaitlistController', ['$scope', '$firebase' ,function($scope, $firebase){
-        // Connecting $scope.parties to live Firebase data
-        var partiesRef = new Firebase('https://sampleapplication-sg.firebaseio.com/parties');
-        $scope.parties= $firebase(partiesRef);
+    .controller('WaitlistController', ['$scope', 'partyService', 'textMessageService','authService',function($scope, partyService, textMessageService, authService){
+        // Bind user's parties to $scope.parties
+        authService.getCurrentUser().then(function(user) {
+          if (user) {
+              $scope.parties = partyService.getPartiesByUserId(user.id);
+          };
+        })
 
         // Object to store data from waitlist form
         $scope.newParty = {name: '', phone:'', size:'', done: false, notified: 'No'};
 
         //Function to save newParty to waitlist
         $scope.saveParty = function() {
-            $scope.parties.$add($scope.newParty);
-            $scope.newParty ={name: '',phone: '', size:'', done: false, notified:'No'};
+            partyService.saveParty($scope.newParty, $scope.currentUser.id);
+            //Reset newParty variable
+            $scope.newParty = {name: '', phone:'', size:'', done: false, notified: 'No'};
+
         };
 
         // Function to send SMS text message to a party
          $scope.sendTextMessage = function(party) {
-            var textMessageRef = new Firebase('https://sampleapplication-sg.firebaseio.com/textMessages');
-            var textMessages = $firebase(textMessageRef);
-             var newTextMessage = {
-                 phoneNumber: party.phone,
-                 size: party.size,
-                 name: party.name
-             }
-
-            textMessages.$add(newTextMessage);
-
-             //Code here for notified
-             party.notified = 'Yes';
-             $scope.parties.$save(party.$id);
-
+          textMessageService.sendTextMessage(party, $scope.currentUser.id);
         };
     }])
-    .controller('AuthController', ['$scope', '$firebaseSimpleLogin', function($scope, $firebaseSimpleLogin) {
-        var authRef = new Firebase('https://sampleapplication-sg.firebaseio.com/');
-        var auth = $firebaseSimpleLogin(authRef);
+    .controller('AuthController', ['$scope', 'authService',  function($scope, authService) {
 
+        // Object bound to inputs on register and login pages
         $scope.user = { email: '', password: ''};
 
+        // Method to register new user using authService (in services)
         $scope.register = function() {
-          auth.$createUser($scope.user.email, $scope.user.password).then(function(data) {
-              console.log(data);
-              auth.$login('password', $scope.user);
-          });
+            authService.register($scope.user);
         };
 
+        // Method to log in user using authService (in services)
         $scope.login = function() {
-            auth.$login('password', $scope.user).then(function (data) {
-                console.log(data);
-            });
-        };
-        $scope.logout = function(){
-            auth.logout();
+            authService.login($scope.user);
         };
 
+        // Method to log out user using authService (in services)
+        $scope.logout = function() {
+            authService.logout();
+        };
 }]);
