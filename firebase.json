@@ -1,0 +1,9 @@
+{
+  "firebase": "sampleapplication-sg",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

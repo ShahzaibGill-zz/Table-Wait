@@ -17,5 +17,6 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/waitlist', { templateUrl:'partials/waitlist.html', controller: 'WaitlistController'});
   $routeProvider.when('/register', { templateUrl: 'partials/register.html', controller: 'AuthController'});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'AuthController'});
+  $routeProvider.when('/menu', {templateUrl: 'partials/menu.html', controller: 'MenuController'});
         $routeProvider.otherwise({redirectTo: '/'});
 }]);

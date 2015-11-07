@@ -1,0 +1,21 @@
+
+<table class ="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="menuitem in menuitems">
+        <td>{{menuitem.name}} {{menuitem.active}}{{menuitem.deactive}}</td>
+        <td>{{menuitem.price | currency}}</td>
+        <td> {{menuitem.quantity}}</td>
+        <td>  <button type="submit" class="btn btn-success" ng-click ="toggleAdd(menuitem)">+</button>
+            <button type="submit" class="btn btn-danger" ng-click="toggleRemove(menuitem)">-</button></td>
+    </tr>
+    <td>Total:{{total() | currency}}</td>
+</table>
+
+

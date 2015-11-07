@@ -107,4 +107,9 @@ angular.module('myApp.services', [])
 
 
       return authServiceObject;
+    })
+    .factory('MenuService', function() {
+      return {
+        totalBill: 0
+      };
     });

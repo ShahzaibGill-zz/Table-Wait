@@ -4,6 +4,7 @@
 
 angular.module('myApp.controllers', [])
     .controller('LandingPageController', [function(){
+
     }])
 
     .controller('WaitlistController', ['$scope', 'partyService', 'textMessageService','authService',function($scope, partyService, textMessageService, authService){
@@ -49,4 +50,61 @@ angular.module('myApp.controllers', [])
         $scope.logout = function() {
             authService.logout();
         };
-}]);
+}])
+    .controller('MenuController', ['$scope', 'MenuService', function($scope, MenuService) {
+
+        $scope.testVariable = 'gordon';
+
+        $scope.menuitems = [
+            {
+                name: 'Tea',
+                price: 300,
+                active:false,
+                deactive: false,
+                quantity: 0
+            },
+            {
+                name: 'Tea2',
+                price: 300,
+                active:false,
+                deactive: false,
+                quantity: 0
+            }
+        ];
+
+        $scope.toggleAdd = function(menuitem){
+          menuitem.active = 'true';
+          menuitem.quantity += 1;
+        };
+
+        $scope.toggleRemove = function(menuitem){
+            menuitem.deactive ='true';
+            if(menuitem.quantity!=0){
+            menuitem.quantity -= 1;
+            }
+        };
+
+        var total = MenuService.totalBill;
+        $scope.total = function(){
+
+            angular.forEach($scope.menuitems, function(menuitem){
+                if (menuitem.active == "true") {
+                    total += menuitem.price;
+                    menuitem.active = "false";
+                    console.log("If Active " + total);
+                }
+                    if (menuitem.deactive == "true" && total != 0){
+                        total = total - menuitem.price;
+                        menuitem.deactive = "false";
+                        console.log("If Deactive" +total);
+                    }
+                }
+            )
+            console.log("Final")
+                return total;
+            }
+
+
+
+
+    }]);
