@@ -104,7 +104,4 @@ angular.module('myApp.controllers', [])
                 return total;
             }
 
-
-
-
     }]);

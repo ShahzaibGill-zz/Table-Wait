@@ -7,7 +7,7 @@
 // In this case it is a simple value service.
 
 angular.module('myApp.services', [])
-    .value('FIREBASE_URL', 'https://sampleapplication-sg.firebaseio.com/')
+    .value('FIREBASE_URL', 'https://table-wait.firebaseio.com/')
     .factory('dataService', function($firebase, FIREBASE_URL) {
       var dataRef = new Firebase(FIREBASE_URL);
       var fireData = $firebase(dataRef);

@@ -1,5 +1,5 @@
 {
-  "firebase": "sampleapplication-sg",
+  "firebase": "table-wait",
   "public": "app",
   "ignore": [
     "firebase.json",
