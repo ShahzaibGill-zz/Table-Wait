@@ -1,4 +1,4 @@
-#TableWait
+# TableWait
 
 https://table-wait.firebaseapp.com/
 
